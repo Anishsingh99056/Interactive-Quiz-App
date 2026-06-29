@@ -1,0 +1,861 @@
+/* ================================
+   Color Palettes & Variables
+================================ */
+
+:root {
+    /* Dark Mode (Default) */
+    --bg-gradient: linear-gradient(135deg, #000000 0%, #0d0d1a 100%);
+    --card-bg: #121214;
+    --text-main: #ffffff;
+    --text-muted: #a0a0ab;
+    --brand-purple: #bb86fc;
+    --brand-blue: #03dac6;
+    --accent-pink: #cf6679;
+
+    /* Custom Theme Color */
+    --brand-teal: #12d2c7;
+
+    /* Feedback Colors */
+    --color-correct: #10b981;
+    --color-incorrect: #ef4444;
+    --color-neutral: #1f1f23;
+    --color-neutral-hover: #2d2d34;
+
+    /* UI */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* ================================
+   Light Theme
+================================ */
+
+body.light-mode {
+    --bg-gradient: linear-gradient(135deg, #f0effc 0%, #e3e0f7 100%);
+    --card-bg: #ffffff;
+    --text-main: #1c1c1c;
+    --text-muted: #5e5e64;
+    --brand-purple: #2b1055;
+    --color-neutral: #f7f8fa;
+    --color-neutral-hover: #edeef2;
+    --shadow-card: 0 15px 35px rgba(25, 0, 71, 0.1);
+}
+
+/* ================================
+   Global Styles
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+    transition: background 0.3s ease;
+}
+
+/* ================================
+   Theme Toggle
+================================ */
+
+.theme-toggle-container {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-label {
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    transition: var(--transition-smooth);
+}
+
+body.light-mode .theme-label {
+    color: #1c1c1c;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #000;
+    border: 2px solid #fff;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+body.light-mode .slider {
+    background: #fff;
+    border-color: #000;
+}
+
+.slider::before {
+    content: "🌙";
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #fff;
+    border-radius: 50%;
+    transition: .4s;
+    font-size: .75rem;
+}
+
+body.light-mode .slider::before {
+    background: #000;
+}
+
+input:checked + .slider {
+    background: #fff;
+    border-color: #000;
+}
+
+input:checked + .slider::before {
+    content: "☀️";
+    transform: translateX(24px);
+    background: #000;
+}
+
+body:not(.light-mode) input:checked + .slider {
+    border-color: #fff;
+}
+
+/* ================================
+   Main Quiz Container
+================================ */
+
+.quiz-container {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 680px;
+
+    padding: 40px;
+    margin-top: 40px;
+
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+
+    position: relative;
+    overflow: hidden;
+
+    transition: var(--transition-smooth);
+}
+
+/* ================================
+   Timer
+================================ */
+
+.global-timer-banner {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 24px;
+
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    box-shadow: 0 4px 15px rgba(0,0,0,.4);
+
+    transition: var(--transition-smooth);
+}
+
+body.light-mode .global-timer-banner {
+    color: var(--brand-purple);
+    background: rgba(25,0,71,.05);
+    border-color: rgba(25,0,71,.1);
+}
+
+.timer-warning {
+    color: var(--color-incorrect) !important;
+    border-color: var(--color-incorrect) !important;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.03);
+    }
+}
+/* ================================
+   Welcome Screen
+================================ */
+
+.welcome-view {
+    text-align: center;
+}
+
+.hero-illustration {
+    width: 180px;
+    height: 140px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.welcome-view h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--brand-purple);
+    margin-bottom: 12px;
+}
+
+.welcome-view p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+}
+
+/* ================================
+   Form
+================================ */
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+
+    color: var(--brand-purple);
+
+    font-size: .9rem;
+    font-weight: 700;
+
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.form-group input {
+    width: 100%;
+
+    padding: 14px 18px;
+
+    border: 2px solid var(--color-neutral-hover);
+    border-radius: var(--radius-md);
+
+    background: var(--color-neutral);
+
+    color: var(--text-main);
+
+    outline: none;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    transition: var(--transition-smooth);
+}
+
+body.light-mode .form-group input {
+    background: #ffffff;
+}
+
+.form-group input:focus {
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 4px rgba(3,218,198,.15);
+}
+
+/* ================================
+   Start Button
+================================ */
+
+.start-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 16px;
+
+    border: none;
+    border-radius: var(--radius-md);
+
+    cursor: pointer;
+
+    color: white;
+
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    background: linear-gradient(
+        90deg,
+        #6200ee,
+        #3700b3
+    );
+
+    box-shadow: 0 4px 15px rgba(0,0,0,.4);
+
+    transition: var(--transition-smooth);
+}
+
+body.light-mode .start-btn {
+    background: linear-gradient(
+        90deg,
+        var(--brand-purple),
+        #310780
+    );
+}
+
+.start-btn:hover {
+    opacity: .95;
+    transform: translateY(-2px);
+}
+
+/* ================================
+   Quiz Header
+================================ */
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+
+    color: var(--text-muted);
+
+    font-size: .9rem;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.header-meta-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.marks-tag {
+    padding: 4px 12px;
+
+    border-radius: 12px;
+
+    background: rgba(3,218,198,.1);
+    color: var(--brand-blue);
+
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.score-tag {
+    padding: 4px 12px;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.06);
+
+    color: var(--text-main);
+
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+/* ================================
+   Progress Bar
+================================ */
+
+.progress-bar-wrapper {
+    width: 100%;
+    height: 8px;
+
+    overflow: hidden;
+
+    margin-bottom: 32px;
+
+    border-radius: 4px;
+
+    background: var(--color-neutral-hover);
+}
+
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+
+    background: var(--brand-teal);
+
+    transition: width .4s ease;
+}
+
+/* ================================
+   Question
+================================ */
+
+.question-text {
+    margin-bottom: 32px;
+
+    color: var(--text-main);
+
+    font-size: 1.6rem;
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+/* ================================
+   Options
+================================ */
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    margin-bottom: 32px;
+}
+
+.option-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 24px;
+
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+
+    background: var(--color-neutral);
+
+    color: var(--text-main);
+
+    cursor: pointer;
+
+    text-align: left;
+
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    transition: var(--transition-smooth);
+}
+
+.option-btn:hover:not([disabled]) {
+    background: var(--color-neutral-hover);
+    transform: translateY(-2px);
+}
+
+.option-btn.correct {
+    color: var(--color-correct) !important;
+    background: rgba(16,185,129,.15) !important;
+    border-color: var(--color-correct) !important;
+}
+
+.option-btn.incorrect {
+    color: var(--color-incorrect) !important;
+    background: rgba(239,68,68,.15) !important;
+    border-color: var(--color-incorrect) !important;
+}
+
+.option-btn[disabled] {
+    cursor: not-allowed;
+}
+/* ================================
+   Quiz Footer
+================================ */
+
+.quiz-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ================================
+   Next Button
+================================ */
+
+.next-btn {
+    background: var(--brand-purple);
+    color: #000000;
+
+    border: none;
+    border-radius: 30px;
+
+    padding: 14px 32px;
+
+    cursor: pointer;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    transition: var(--transition-smooth);
+}
+
+body.light-mode .next-btn {
+    color: #ffffff;
+}
+
+.next-btn:hover:not([disabled]) {
+    opacity: .9;
+    transform: translateY(-1px);
+}
+
+.next-btn:disabled {
+    background: #44444c;
+    color: #888894;
+    cursor: not-allowed;
+}
+
+body.light-mode .next-btn:disabled {
+    background: #ccd1d9;
+    color: #8c96a3;
+}
+
+/* ================================
+   Results Screen
+================================ */
+
+.results-view {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.results-view h2 {
+    font-size: 2.2rem;
+    color: var(--brand-purple);
+    margin-bottom: 8px;
+}
+
+/* ================================
+   Student Details
+================================ */
+
+.student-metadata {
+    margin-bottom: 20px;
+
+    color: var(--text-muted);
+
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+/* ================================
+   Score Circle
+================================ */
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+
+    margin: 20px auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    border: 4px solid var(--brand-blue);
+
+    background: linear-gradient(
+        135deg,
+        rgba(3,218,198,.1),
+        rgba(207,102,121,.1)
+    );
+}
+
+.percentage {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.total-marks-label {
+    margin-top: 4px;
+
+    color: var(--text-muted);
+
+    font-size: .85rem;
+    font-weight: 700;
+
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+/* ================================
+   Final Score Text
+================================ */
+
+.score-text {
+    margin-bottom: 24px;
+
+    color: var(--text-main);
+
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* ================================
+   Feedback Box
+================================ */
+
+.feedback-box {
+    padding: 20px;
+    margin-bottom: 32px;
+
+    border-radius: var(--radius-md);
+    border-left: 5px solid transparent;
+
+    text-align: left;
+
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.feedback-bad {
+    color: #ef4444;
+    border-left-color: var(--color-incorrect);
+
+    background: rgba(239,68,68,.1);
+}
+
+.feedback-average {
+    color: #f59e0b;
+    border-left-color: #f59e0b;
+
+    background: rgba(245,158,11,.1);
+}
+
+.feedback-excellent {
+    color: #10b981;
+    border-left-color: var(--color-correct);
+
+    background: rgba(16,185,129,.1);
+}
+
+/* ================================
+   Restart Button
+================================ */
+
+.restart-btn {
+    min-width: 240px;
+
+    display: inline-block;
+
+    padding: 16px 40px;
+
+    border: none;
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    background: var(--brand-teal);
+    color: #000000;
+
+    text-align: center;
+
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    transition: var(--transition-smooth);
+}
+
+body.light-mode .restart-btn {
+    color: #000000;
+}
+
+.restart-btn:hover {
+    opacity: .9;
+    transform: scale(1.01);
+}
+/* ================================
+   Utility Classes
+================================ */
+
+.hide {
+    display: none !important;
+}
+
+/* ================================
+   Mobile Responsive Design
+================================ */
+
+@media (max-width: 600px) {
+
+    .theme-toggle-container,
+    .global-timer-banner {
+        top: 12px;
+    }
+
+    .theme-toggle-container {
+        right: 12px;
+    }
+
+    .global-timer-banner {
+        left: 12px;
+
+        padding: 6px 14px;
+
+        font-size: 0.95rem;
+    }
+
+    .quiz-container {
+        margin-top: 70px;
+        padding: 24px 16px;
+    }
+
+    .hero-illustration {
+        width: 140px;
+        height: 110px;
+    }
+
+    .welcome-view h1 {
+        font-size: 1.8rem;
+    }
+
+    .welcome-view p {
+        font-size: 0.95rem;
+    }
+
+    .question-text {
+        font-size: 1.25rem;
+        margin-bottom: 24px;
+    }
+
+    .progress-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .header-meta-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .option-btn {
+        padding: 14px 18px;
+        font-size: 1rem;
+    }
+
+    .next-btn {
+        width: 100%;
+    }
+
+    .restart-btn {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .score-circle {
+        width: 130px;
+        height: 130px;
+    }
+
+    .percentage {
+        font-size: 2rem;
+    }
+
+    .student-metadata,
+    .score-text,
+    .feedback-box {
+        font-size: 1rem;
+    }
+}
+
+/* ================================
+   Optional Smooth Animations
+================================ */
+
+.option-btn,
+.start-btn,
+.next-btn,
+.restart-btn,
+.quiz-container,
+.form-group input,
+.theme-label,
+.global-timer-banner {
+    transition: var(--transition-smooth);
+}
+
+/* ================================
+   Focus Accessibility
+================================ */
+
+button:focus,
+input:focus {
+    outline: none;
+}
+
+/* ================================
+   Scrollbar (Optional)
+================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--brand-purple);
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-teal);
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+    background: #ececec;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+    background: var(--brand-purple);
+}

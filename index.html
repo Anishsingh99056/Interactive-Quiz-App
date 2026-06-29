@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentimeter JavaScript Quiz Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="theme-toggle-container">
+        <span class="theme-label" id="theme-text">Dark Mode</span>
+        <label class="switch">
+            <input type="checkbox" id="theme-toggle-checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div id="global-timer" class="global-timer-banner hide">
+        ⏱️ Time Left: <span id="timer-clock">30:00</span>
+    </div>
+
+    <div class="quiz-container">
+        
+        <div id="welcome-view" class="welcome-view">
+            <svg class="hero-illustration" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="110" width="160" height="8" rx="4" fill="#aab2bd"/>
+                <rect x="40" y="30" width="120" height="80" rx="8" fill="#190047"/>
+                <rect x="45" y="35" width="110" height="70" rx="4" fill="#00bcd4" opacity="0.2"/>
+                <circle cx="100" cy="65" r="18" fill="#ed008c"/>
+                <path d="M70 110 C 70 85, 130 85, 130 110 Z" fill="#120e3d"/>
+                <path d="M75 110 L65 130 L135 130 L125 110 Z" fill="#e6e9ed"/>
+                <rect x="70" y="128" width="60" height="4" rx="2" fill="#aab2bd"/>
+                <circle cx="45" cy="45" r="3" fill="#00bcd4"/>
+                <circle cx="155" cy="55" r="4" fill="#ed008c"/>
+                <circle cx="145" cy="85" r="2.5" fill="#10b981"/>
+            </svg>
+
+            <h1>Interactive JS Quiz</h1>
+            <p>Please enter your information to unlock the 10-question evaluation terminal.</p>
+            <form id="registration-form" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="student-name">Full Name</label>
+                    <input type="text" id="student-name" placeholder="e.g. Anish singh" required>
+                </div>
+                <div class="form-group">
+                    <label for="enrollment-id">Enrollment ID</label>
+                    <input type="text" id="enrollment-id" placeholder="e.g. ENR-2026-098" required>
+                </div>
+                <button type="submit" id="start-quiz-btn" class="start-btn">Launch Quiz Terminal</button>
+            </form>
+        </div>
+
+        <div id="quiz-view" class="hide">
+            <div class="progress-header">
+                <span id="question-counter">Question 1 of 10</span>
+                <div class="header-meta-group">
+                    <span id="live-score-display" class="score-tag">Score: 0</span>
+                    <span class="marks-tag">1 Mark</span>
+                </div>
+            </div>
+            
+            <div class="progress-bar-wrapper">
+                <div id="progress-bar" class="progress-bar-fill"></div>
+            </div>
+
+            <div id="question" class="question-text">Loading question structure...</div>
+
+            <div id="options" class="options-list">
+                </div>
+
+            <div class="quiz-footer">
+                <button id="next-button" class="next-btn" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <div id="results-view" class="results-view hide">
+            <h2>Quiz Evaluation Complete</h2>
+            <div id="student-summary" class="student-metadata">Participant: Name (ID)</div>
+            
+            <div class="score-circle">
+                <div id="final-marks" class="percentage">0/10</div>
+                <div class="total-marks-label">Total Marks</div>
+            </div>
+            
+            <p id="final-score-text" class="score-text">You scored 0 out of 10 marks.</p>
+            
+            <div id="feedback-container" class="feedback-box">
+                </div>
+
+            <button id="restart-button" class="restart-btn">Restart Terminal</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
